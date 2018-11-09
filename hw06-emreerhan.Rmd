@@ -1,0 +1,122 @@
+---
+title: "R Notebook"
+author: Emre Erhan
+date: '2018-11-09'
+theme: yeti
+output: github_document
+---
+
+## Import required packages
+
+```{r results='hide', message=FALSE, warning=FALSE}
+library(stringr)
+library(gapminder)
+library(ggplot2)
+library(dplyr)
+library(testthat)
+```
+
+
+
+## 2. Writing a function
+
+In computational biology, when working with DNA sequences, it is often useful to get the "canonical" version of a string of DNA bases. The canonical version is either the lexographically maximal or lexographically minimal complement of the sequence. I will write a function that returns the canonical sequence for a given DNA sequence.
+
+```{r}
+canonical = function(seq){
+  complement = chartr("ATGC", "TACG", seq) # chartr determines the mapping of complementary basepairs
+  if (seq > complement){
+    return(seq)
+  }
+  else{
+    return(complement)
+  }
+}
+```
+
+Let's give it a shot! The canonical sequence of "ACGT" and "TGCA" should both be the same, since they're complementary sequences. Let's use `test_that`
+
+```{r}
+test_that("A simple test", {
+  expect_equal(canonical("ACGT"), canonical("TGCA"))
+})
+```
+
+It works! Although, it may be useful to specify whether the maximal or minimal complement is required. I'll provide that option in a parameter.
+
+```{r}
+canonical = function(seq, minimal = TRUE){
+  complement = chartr("ATGC", "TACG", seq) # chartr determines the mapping of complementary basepairs
+  if (minimal){
+    if (seq < complement){
+      return(seq)
+    }
+    else{
+      return(complement)
+    }
+  }
+  else{
+    if (seq < complement){
+      return(complement)
+    }
+    else{
+      return(seq)
+    }
+  }
+}
+```
+
+Let's make some test cases using `test_that`
+
+```{r}
+long_seq = 'ACGTCGATCGATGCTAGCTAGCTAGTCGACTATCAGTAG'
+test_that("Testing complementary sequences", {
+  expect_equal(canonical("ACGT"), canonical("TGCA"))
+  expect_equal(canonical(long_seq), canonical(chartr("ATGC", "TACG", long_seq)))
+  expect_equal(canonical(long_seq, minimal = FALSE), canonical(chartr("ATGC", "TACG", long_seq), minimal = FALSE))
+})
+```
+
+Finally, let's make sure that the input is a string, and a DNA sequence.
+
+```{r}
+canonical = function(seq, minimal = TRUE){
+  if (!is.character(seq)){
+    stop(paste("Expecting a string. Was given", typeof(seq)))
+  }
+  seq = toupper(seq)
+  if (!str_detect(seq, '^[ACGT]*$')){
+    stop(paste("Expecting a DNA sequence consisting of only A, C, G, T"))
+  }
+  
+  complement = chartr("ATGC", "TACG", seq) # chartr determines the mapping of complementary basepairs
+  if (minimal){
+    if (seq < complement){
+      return(seq)
+    }
+    else{
+      return(complement)
+    }
+  }
+  else{
+    if (seq < complement){
+      return(complement)
+    }
+    else{
+      return(seq)
+    }
+  }
+}
+```
+
+Let's test the error messages.
+
+```{r error=TRUE}
+canonical(123)
+```
+
+```{r error=TRUE}
+canonical("Testing a non-DNA sequence")
+```
+
+Excellent! We now have a `canonical` function.
