@@ -13,7 +13,7 @@ library(dplyr)
 library(testthat)
 ```
 
-## 2\. Writing a function
+## 2\. Writing useful functions
 
 In computational biology, when working with DNA sequences, it is often
 useful to get the “canonical” version of a string of DNA bases. The
@@ -21,9 +21,23 @@ canonical version is either the lexographically maximal or
 lexographically minimal complement of the sequence. I will write a
 function that returns the canonical sequence for a given DNA sequence.
 
+### Preliminary functions
+
+Let’s start by writing a function that returns the complementary
+sequence of a DNA sequence.
+
+``` r
+complementary = function(seq){
+  complement = chartr("ATGCN", "TACGN", seq) # chartr maps characters to characters. We use this to determine the complementary basepairs
+  return(complement)
+}
+```
+
+We’ll use this complementary function in the canonical function
+
 ``` r
 canonical = function(seq){
-  complement = chartr("ATGC", "TACG", seq) # chartr determines the mapping of complementary basepairs
+  complement = complementary(seq)
   if (seq > complement){
     return(seq)
   }
@@ -33,40 +47,40 @@ canonical = function(seq){
 }
 ```
 
+### Preliminary tests
+
 Let’s give it a shot\! The canonical sequence of “ACGT” and “TGCA”
 should both be the same, since they’re complementary sequences. Let’s
 use `test_that`
 
 ``` r
+test_that("Testing if the complement function works", {
+  expect_equal(complementary("ACGT"), "TGCA")
+})
+
 test_that("A simple test", {
   expect_equal(canonical("ACGT"), canonical("TGCA"))
 })
 ```
+
+### Adding optional parameters
 
 It works\! Although, it may be useful to specify whether the maximal or
 minimal complement is required. I’ll provide that option in a parameter.
 
 ``` r
 canonical = function(seq, minimal = TRUE){
-  complement = chartr("ATGC", "TACG", seq) # chartr determines the mapping of complementary basepairs
+  complement = complementary(seq)
   if (minimal){
-    if (seq < complement){
-      return(seq)
-    }
-    else{
-      return(complement)
-    }
+    return(min(seq, complement))
   }
   else{
-    if (seq < complement){
-      return(complement)
-    }
-    else{
-      return(seq)
-    }
+    return(max(seq, complement))
   }
 }
 ```
+
+### Testing parameters
 
 Let’s make some test cases using `test_that`
 
@@ -79,7 +93,24 @@ test_that("Testing complementary sequences", {
 })
 ```
 
+### Verify input
+
 Finally, let’s make sure that the input is a string, and a DNA sequence.
+
+``` r
+complementary = function(seq){
+  if (!is.character(seq)){
+    stop(paste("Expecting a string. Was given", typeof(seq)))
+  }
+  seq = toupper(seq)
+  if (!str_detect(seq, '^[ACGT]*$')){
+    stop(paste("Expecting a DNA sequence consisting of only A, C, G, T"))
+  }
+  
+  complement = chartr("ATGCN", "TACGN", seq) # chartr maps characters to characters. We use this to determine the complementary basepairs
+  return(complement)
+}
+```
 
 ``` r
 canonical = function(seq, minimal = TRUE){
@@ -91,28 +122,25 @@ canonical = function(seq, minimal = TRUE){
     stop(paste("Expecting a DNA sequence consisting of only A, C, G, T"))
   }
   
-  complement = chartr("ATGC", "TACG", seq) # chartr determines the mapping of complementary basepairs
+  complement = complementary(seq)
+  
   if (minimal){
-    if (seq < complement){
-      return(seq)
-    }
-    else{
-      return(complement)
-    }
+    return(min(seq, complement))
   }
   else{
-    if (seq < complement){
-      return(complement)
-    }
-    else{
-      return(seq)
-    }
+    return(max(seq, complement))
   }
 }
 ```
 
 Let’s test the error
     messages.
+
+``` r
+complementary(123)
+```
+
+    ## Error in complementary(123): Expecting a string. Was given double
 
 ``` r
 canonical(123)
