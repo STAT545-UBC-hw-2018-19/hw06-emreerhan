@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "HW06 Data Wrangling"
 author: Emre Erhan
 date: '2018-11-09'
 theme: yeti

@@ -1,4 +1,4 @@
-R Notebook
+HW06 Data Wrangling
 ================
 Emre Erhan
 2018-11-09
@@ -142,11 +142,11 @@ str_view("$^$", '\\$')
 
 <!--html_preserve-->
 
-<div id="htmlwidget-7758d027c0eed72c0867" class="str_view html-widget" style="width:960px;height:100%;">
+<div id="htmlwidget-fc80c027ee3d9bce81d9" class="str_view html-widget" style="width:960px;height:100%;">
 
 </div>
 
-<script type="application/json" data-for="htmlwidget-7758d027c0eed72c0867">{"x":{"html":"<ul>\n  <li><span class='match'>$<\/span>^$<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-fc80c027ee3d9bce81d9">{"x":{"html":"<ul>\n  <li><span class='match'>$<\/span>^$<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 <!--/html_preserve-->
 
@@ -182,13 +182,13 @@ string_vector[dup_index]
 stri_rand_strings(20, 20)
 ```
 
-    ##  [1] "SLo9kvqA2PD5tDemuttK" "oymxAyieJXErtktpxfDc" "fTuPqQ0a1mx74ozHOAJB"
-    ##  [4] "0QLNQaDEsaRMgvKSfapg" "v7wqOfNDrPXmoJ6ovaQE" "HLlrBBWZkmJLFyHUIBXR"
-    ##  [7] "xzAvLLK7cNJbbl3O06Pl" "9BIoGzV6lYWRjaMbikuZ" "NsGzbJli6XFLlkLr94ZG"
-    ## [10] "PxbMfi0jDay5IbLFKRUl" "Yamz2xPEwKKHVlQzyiG4" "9yrT0zJf6eJj04Ll5lq2"
-    ## [13] "2ftQO3n8EdvPKLFtJdGL" "esdVzfI31JGjpENtXKzz" "zFC9iQTr0P5urrJtIbPu"
-    ## [16] "DtaYTRBlD91KJYWtytHK" "Vit4WKZBfQbj8dVmAx34" "tSXPEOVYH3wUo0HTCD6C"
-    ## [19] "u171WO4ldwgkwRd9PfPR" "onWO5xSZdnbCQ9bZfXDO"
+    ##  [1] "zVk9vEbnVqqqwN6E2wQZ" "0RTPUtEG7hBPUarOnyjP" "eiT1UAaVXdToQwGwVOlz"
+    ##  [4] "ygFXYNAT2wozy23H6cOX" "JTmMh6xhq32HxZrT1N7x" "UnGjeD5bDfUbDOEBMwMQ"
+    ##  [7] "PvuXqbroCK7UvgnFwcBz" "BSrESWSfaRI2dYhpG8Lt" "gIwRU9C25kbiPFhb9PsI"
+    ## [10] "fzSJsMQjthl3USEnxpZU" "xcmjFdzRelAIfiDVp4AQ" "1hdfMNQTJHL4kZWSqatr"
+    ## [13] "2rIO0Apuw1R2Sp57Dfcz" "5V3qqTaDXeI51i5JLD3A" "C1uWD8wOzNZyoKzsF2I0"
+    ## [16] "mLuThiA2qlQ71PQEB18i" "zLblMT411tfi76n4CGXl" "MUECHhXBvE5xvPcqlYzJ"
+    ## [19] "7kUgFDejMUnO2tliWzSQ" "HvsYwq0IQlb3WHlcoEqN"
 
 #### How do you control the language that stri\_sort() uses for sorting?
 
